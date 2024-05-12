@@ -116,78 +116,32 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-
-        """Command syntax: create <Class name> <param 1> <param 2> <param 3>..."""
-        """Param syntax: <key name>=<value>"""
-        """
-        Value syntax:
-
-             String: "<value>" => starts with a double quote
-                any double quote inside the value must be escaped with a backslash \
-                all underscores _ must be replace by spaces . Example: You want to set the string My little house to the attribute name, your command line must be name="My_little_house"
-        Float: <unit>.<decimal> => contains a dot .
-        Integer: <number> => default case
-
-        If any parameter doesn’t fit with these requirements or can’t be recognized correctly by your program, it must be skipped
-        """
-        # formated_command = ""
-        args_list = args.split()
         if not args:
             print("** class name missing **")
             return
         
-        elif args_list[0] not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        
+           
+        new_instance = HBNBCommand.classes[args[0]]()
+        args = args[1:]
+        for arg in args:
+            arg = arg.split('=') + ['']
+            key = arg[0]
+            val = arg[1]
+            if val.isdigit():
+                val = int(val)
+            elif isinstance(val, float):
+                val = float(val)
+            elif val.startswith('"') and val.endswith('"'):
+                val = val[1: -1]
+                val = val.replace('_', ' ')
+                val = val.replace('\\"', '"')
+            else:
+                continue
+            new_instance.__dict__[key] = val
 
-        
-        # for pram in args_list:
-        #     if '=' in pram:
-        #         splited_pram = pram.split()
-        #         for x in splited_pram:
-        #             if '.' in splited_pram[2]:
-        #                 float(splited_pram[2])
-        #             elif isinstance(splited_pram[2], str):
-        #                 if '"' in splited_pram[2][1:-1]:
-        #                     splited_pram[2][1:-1].replace('"', '\"')
-        #                 if splited_pram[2].contains('_'):
-        #                     splited_pram[2].replace('_', ' ')
-        #     else:
-        #         pass   
-
-        new_instance = HBNBCommand.classes[args]() 
-        for pram in args_list:
-            if '=' in pram:
-                key, value = pram.split('=', 1)  # Split the parameter into key and value
-                if '"' in value:
-                    value = value.replace('"', '\\"')  # Escape double quotes
-                if '_' in value:
-                    value = value.replace('_', ' ')  # Replace underscores with spaces
-                if '.' in value:
-                    value = float(value)  # Convert to float if it's a float number
-                else:
-                    try:
-                        value = int(value)  # Try to convert to int if it's an integer
-                    except ValueError:
-                        pass  # If it's not an integer, just skip it
-                setattr(new_instance, key, value)  # 
-
-        #### new_instance = HBNBCommand.classes[args]()
-        # for param in args_list[1:]:
-        #     try:
-        #         key, value = param.split('=', 1)
-        #         if '"' in value:
-        #             value = value.replace('"', '\\"')
-        #             value = value.replace('_', ' ')
-        #         elif '.' in value:
-        #             value = float(value)
-        #         else:
-        #             value = int(value)
-        #         setattr(new_instance, key, value)
-        #     except ValueError:
-        #         pass
-        storage.save()
         print(new_instance.id)
         storage.save()
 
