@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    ###### update --> replace "is" by "==" in the below line
+                    # update --> replace "is" by "==" in the below line
                     if pline[0] == '{' and pline[-1] == '}' \
                             and type(eval(pline)) is dict:
                         _args = pline
@@ -119,12 +119,12 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        
+
         elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-                
-        new_instance = HBNBCommand.classes[args]() 
+
+        new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -275,7 +275,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            ###### update --> replace "is" by "==" in the below line
+            # update --> replace "is" by "==" in the below line
             if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
@@ -284,11 +284,11 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            ###### update --> replace "is not" by "!=" in the below line
+            # update --> replace "is not" by "!=" in the below line
             if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            ###### update --> replace "is" by "==" in the below line
+            # update --> replace "is" by "==" in the below line
             if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
