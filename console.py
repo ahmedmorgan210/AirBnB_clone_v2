@@ -123,25 +123,9 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-           
-        new_instance = HBNBCommand.classes[args[0]]()
-        args = args[1:]
-        for arg in args:
-            arg = arg.split('=') + ['']
-            key = arg[0]
-            val = arg[1]
-            if val.isdigit():
-                val = int(val)
-            elif isinstance(val, float):
-                val = float(val)
-            elif val.startswith('"') and val.endswith('"'):
-                val = val[1: -1]
-                val = val.replace('_', ' ')
-                val = val.replace('\\"', '"')
-            else:
-                continue
-            new_instance.__dict__[key] = val
-
+                
+        new_instance = HBNBCommand.classes[args]() 
+        storage.save()
         print(new_instance.id)
         storage.save()
 
