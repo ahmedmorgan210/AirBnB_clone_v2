@@ -44,7 +44,8 @@ class HBNBCommand(cmd.Cmd):
         _cmd = _cls = _id = _args = ''  # initialize line elements
 
         # scan for general formating - i.e '.', '(', ')'
-        if not ('.' in line and '(' in line and ')' in line):
+        # Update - Remove "not" from the below line ############################
+        if ('.' in line and '(' in line and ')' in line):
             return line
 
         try:  # parse line left to right
@@ -115,12 +116,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        args = args[1:]
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        else:
+            print("class found")
         new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
