@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         _cmd = _cls = _id = _args = ''  # initialize line elements
 
         # scan for general formating - i.e '.', '(', ')'
-        # Update - Remove "not" from the below line ############################
+        # Update - Remove "not" from the below line ###########
         if ('.' in line and '(' in line and ')' in line):
             return line
 
